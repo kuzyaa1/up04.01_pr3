@@ -25,7 +25,6 @@ class HallQuery {
       this.page = 1,
       this.size = 10,
       this.includeDeleted = false});
-
   factory HallQuery.fromUri(Uri uri) {
     final p = uri.queryParameters;
     final sort = (p['sort'] ?? '').split(',');

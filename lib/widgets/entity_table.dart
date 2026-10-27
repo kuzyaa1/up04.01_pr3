@@ -10,7 +10,7 @@ class EntityTable<T> extends StatelessWidget {
   final bool asc;
   final ValueChanged<String> onSort;
   final List<Widget> Function(T) actions;
-
+  final bool Function(T)? isDeleted;
   const EntityTable(
       {super.key,
       required this.items,
@@ -21,15 +21,16 @@ class EntityTable<T> extends StatelessWidget {
       required this.sort,
       required this.asc,
       required this.onSort,
-      required this.actions});
-
+      required this.actions,
+      this.isDeleted});
   @override
   Widget build(BuildContext context) {
+    final sortIndex = columns.indexWhere((column) => column.$2 == sort);
     return SingleChildScrollView(
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: DataTable(
-          sortColumnIndex: columns.indexWhere((column) => column.$2 == sort),
+          sortColumnIndex: sortIndex < 0 ? null : sortIndex + 1,
           sortAscending: asc,
           columns: [
             const DataColumn(label: Text('')),
